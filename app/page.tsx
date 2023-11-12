@@ -1,95 +1,61 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+/* eslint-disable @next/next/no-img-element */
+"use client";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import styles from "./page.module.scss";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    const imageRef = useRef(null);
+    useEffect(() => {
+        (async () => {
+            const LocomotiveScroll = (await import("locomotive-scroll"))
+                .default;
+
+            const locomotiveScroll = new LocomotiveScroll();
+        })();
+    }, []);
+
+    // Define the animation timeline
+    useLayoutEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const timeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: imageRef.current,
+                start: "top top",
+                end: "bottom center",
+                scrub: true,
+                pin: true,
+                markers: true,
+            },
+            id: "imag2",
+        });
+        timeline.fromTo(
+            imageRef.current,
+            {
+                clipPath: "inset(30%)",
+            },
+            {
+                clipPath: "inset(0%)",
+            }
+        );
+    }, []);
+
+    return (
+        <div
+            className="wrapper"
+            style={{
+                height: "500vh",
+            }}
+        >
+            <div style={{ height: "100vh" }}></div>
+            <img
+                src="/image.jpg"
+                alt="mountains"
+                className={styles.image}
+                ref={imageRef}
             />
-          </a>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    );
 }
+
