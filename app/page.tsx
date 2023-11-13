@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import styles from "./page.module.scss";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Footer from "./Footer";
 
 export default function Home() {
     const imageRef = useRef(null);
@@ -63,23 +64,26 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="wrapper">
-            <div style={{ height: "30vh" }}></div>
-            <div className={styles.headingWrapper} id="headingWrapper">
-                <div className={styles.heading} id="heading">
-                    SOME HEADING LOL
+        <>
+            <div className="wrapper">
+                <div style={{ height: "30vh" }}></div>
+                <div className={styles.headingWrapper} id="headingWrapper">
+                    <div className={styles.heading} id="heading">
+                        SOME HEADING LOL
+                    </div>
+                    <div className={styles.subheading} id="subheading">
+                        scroll slowly...
+                    </div>
                 </div>
-                <div className={styles.subheading} id="subheading">
-                    scroll slowly...
-                </div>
+                <img
+                    src="/image.jpg"
+                    alt="mountains"
+                    className={styles.image}
+                    ref={imageRef}
+                />
             </div>
-            <img
-                src="/image.jpg"
-                alt="mountains"
-                className={styles.image}
-                ref={imageRef}
-            />
-        </div>
+            <Footer />
+        </>
     );
 }
 
