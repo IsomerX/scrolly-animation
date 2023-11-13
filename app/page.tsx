@@ -32,9 +32,11 @@ export default function Home() {
         timeline.fromTo(
             imageRef.current,
             {
+                opacity: 0,
                 clipPath: "inset(30%)",
             },
             {
+                opacity: 1,
                 clipPath: "inset(0%)",
             }
         );
